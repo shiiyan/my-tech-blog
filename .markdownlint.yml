@@ -1,2 +1,3 @@
 default: true
 MD018: false
+MD028: false
