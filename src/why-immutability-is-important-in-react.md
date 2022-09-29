@@ -54,7 +54,7 @@ return false;
 ### Determining When to Re-Render in React
 
 Immutable object can help React to optimize performance
-by only re-rendering components when changes has been detected.
+by only re-rendering components when changes have been detected.
 
 for example, `shouldComponentUpdate()` or `React.PureComponet`
 
