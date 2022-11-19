@@ -16,9 +16,12 @@ Event
     - event_data
 ```
 
-ドメインイベントはブスクライバにアグリゲートの状態の変化を通知するメカニズム。イベントをパブリッシュするかういう情報を入れるかはコンシューマのニーズによって決まる。イベントソーシングを使うとグリゲートの状態の全ての変化はドメインイベントによって表現する。
+ドメインイベントはブスクライバにアグリゲートの状態の変化を通知するメカニズム。
+イベントをパブリッシュするかういう情報を入れるかはコンシューマのニーズによって決まる。イベントソーシングを使うとグリゲートの状態の全ての変化はドメインイベントによって表現する。
+
 イベントソーシングフレームワークに Eventuate Client フレームワークがある。
-Order エンティティの実例。`createOrder()` は `process(CreateOrderCommand)` と `apply(OrderCreateEvent)` に変わる。`reviseOrder()` は `process(ReviseOrderCommand)` と `apply(OrderRevisedEvent)` に変わる。`process()` は新しいイベントを生成apply()` はアグリゲートを更新。実例は冒頭のリンクを参照。
+
+Order エンティティの実例。`createOrder()` は `process(CreateOrderCommand)` と `apply(OrderCreateEvent)` に変わる。`reviseOrder()` は `process(ReviseOrderCommand)` と `apply(OrderRevisedEvent)` に変わる。`process()` は新しいイベントを生成 apply()` はアグリゲートを更新。実例は冒頭のリンクを参照。
 
 イベントストアも同時更新の処理のために楽観ロックが必要。アグリゲートにバージョン情報を持っていてベント挿入時にイベントストアはバージョンが変わっていないことをチェックする。一番シンプルなバーションはイベント数を使うこと。
 
