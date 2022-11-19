@@ -1,6 +1,7 @@
 # マイクロサービスパターンの読書　第 6 章
 
 作者の Chris Richardson さんが用意したイベントソーシングパターンを紹介するページはこちら。
+
 https://microservices.io/patterns/data/event-sourcing.html
 
 ## クイックメモ
@@ -31,6 +32,7 @@ WHERE VERSION = <元のバージョン>
 ```
 
 楽観ロックと悲観ロックを比較するわかりやすい参考資料
+
 https://qiita.com/NagaokaKenichi/items/73040df85b7bd4e9ecfc
 
 #reading
