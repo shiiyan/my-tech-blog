@@ -37,6 +37,8 @@ Immutability means when a object can not be altered in place, instead a cloned o
 
 A example of Luxon.
 
+https://moment.github.io/luxon/#/tour?id=immutability
+
 ```javascript
 // Math
 // This is easier to show than to tell. All of these calls return new DateTime instances:
@@ -48,6 +50,8 @@ dt.endOf("hour");
 ```
 
 A example of Day.js.
+
+https://day.js.org/docs/en/manipulate/add
 
 ```javascript
 const a = dayjs();
