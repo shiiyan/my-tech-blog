@@ -1,4 +1,4 @@
-# Design Pattern For Bulk Insert
+# Design Patterns For Bulk Insert
 
 For original contents, refer to the following link.
 
