@@ -1,5 +1,7 @@
 # Simple CQRS Pattern, A Beginner's Perspective
 
+I write this blog becuase I found CQRS was difficult, hard to understand. I will try to share my thoughts with simple examples.
+
 ## What is CQRS pattern
 
 A good explanation,
