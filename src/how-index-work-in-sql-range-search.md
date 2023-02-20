@@ -36,7 +36,7 @@ When we perform the following query without any index,
 SELECT * FROM coupons WHERE usage_start_date = '2022-01-01';
 ```
 
-the execution plan would be like the following
+the execution plan would be like the following.
 
 | id  | select_type | table   | partitions | type | possible_keys | key | key_len | ref | rows | filtered | Extra       |
 | --- | ----------- | ------- | ---------- | ---- | ------------- | --- | ------- | --- | ---- | -------- | ----------- |
