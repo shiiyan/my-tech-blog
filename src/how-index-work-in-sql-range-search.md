@@ -82,6 +82,20 @@ If there are indexes, the database engine will utilize two indexes of column usa
 
 ## How do indexes work in range search
 
+Consider the following query.
+
+```sql
+SELECT * FROM coupons WHERE usage_start_date BETWEEN '2023-01-01' AND '2023-01-02';
+```
+
+The execution plan for this query is
+
+| id  | select_type | table   | partitions | type  | possible_keys                    | key                              | key_len | ref | rows | filtered | Extra                 |
+| --- | ----------- | ------- | ---------- | ----- | -------------------------------- | -------------------------------- | ------- | --- | ---- | -------- | --------------------- |
+| 1   | SIMPLE      | coupons |            | range | coupons_index_1_usage_start_date | coupons_index_1_usage_start_date | 4       |     | 2    | 100.00   | Using index condition |
+
+
+
 ## Some good explanations of SQL indexes
 
 https://chartio.com/learn/databases/how-does-indexing-work/
