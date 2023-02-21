@@ -1,4 +1,4 @@
-# How do SQL indexes work in SQL range search
+# How do indexes work in SQL range search
 
 I always need clarification about indexes, how they work, and why they can improve SQL query performance. In this article, I want to answer these questions by exploring an example of a range search. If you have the same questions, this article will help you.
 
