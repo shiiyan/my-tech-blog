@@ -94,7 +94,7 @@ The execution plan for this query is
 | --- | ----------- | ------- | ---------- | ----- | -------------------------------- | -------------------------------- | ------- | --- | ---- | -------- | --------------------- |
 | 1   | SIMPLE      | coupons |            | range | coupons_index_1_usage_start_date | coupons_index_1_usage_start_date | 4       |     | 2    | 100.00   | Using index condition |
 
-
+The index search will start at the first index greater than or equal to '2023-01-01' and end at the first index greater than '2023-01-02'. All rows inside the searched range will be fetched. In this case, the database engine will fetch two rows with id 3 and 2.
 
 ## Some good explanations of SQL indexes
 
