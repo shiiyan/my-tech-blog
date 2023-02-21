@@ -1,6 +1,8 @@
-# How do SQL indexes work in SQL range search?
+# How do SQL indexes work in SQL range search
 
 I always need clarification about indexes, how they work, and why they can improve SQL query performance. In this article, I want to answer these questions by exploring an example of a range search. If you have the same questions, this article will help you.
+
+## TL;DR
 
 ## What are SQL indexes
 
@@ -58,7 +60,27 @@ The execution plan for the same query becomes
 | --- | ----------- | ------- | ---------- | ---- | -------------------------------- | -------------------------------- | ------- | ----- | ---- | -------- | ----- |
 | 1   | SIMPLE      | coupons |            | ref  | coupons_index_1_usage_start_date | coupons_index_1_usage_start_date | 4       | const | 1    | 100.00   |       |
 
-Instead of a full table scan, the database engine fetches one row this time. Since all dates in the database are older than the provided date, the index search will stop at the first node of 2023-01-01, and the result is an empty set.
+Instead of a full table scan, the database engine fetches one row this time. Since all dates in the database are older than the provided date, the index search will stop at the first node of 2023-01-01, resulting in an empty set.
+
+Now we add some complexity to the query's where condition. Consider the following query,
+
+```sql
+SELECT * FROM coupons WHERE usage_start_date = '2022-01-01' OR usage_end_date = '2023-02-01';
+```
+
+If there are no indexes in this table, the database engine will perform a full table scan before completing the comparison.
+
+| id  | select_type | table   | partitions | type | possible_keys | key | key_len | ref | rows | filtered | Extra       |
+| --- | ----------- | ------- | ---------- | ---- | ------------- | --- | ------- | --- | ---- | -------- | ----------- |
+| 1   | SIMPLE      | coupons |            | ALL  |               |     |         |     | 3    | 33.33    | Using where |
+
+If there are indexes, the database engine will utilize two indexes of column usage_start_date and usage_end_date to narrow down rows to fetch separately, then union the results.
+
+| id  | select_type | table   | partitions | type        | possible_keys                                                   | key                                                             | key_len | ref | rows | filtered | Extra                                                                                     |
+| --- | ----------- | ------- | ---------- | ----------- | --------------------------------------------------------------- | --------------------------------------------------------------- | ------- | --- | ---- | -------- | ----------------------------------------------------------------------------------------- |
+| 1   | SIMPLE      | coupons |            | index_merge | coupons_index_1_usage_start_date,coupons_index_2_usage_end_date | coupons_index_1_usage_start_date,coupons_index_2_usage_end_date | 4,4     |     | 2    | 100.00   | Using union(coupons_index_1_usage_start_date,coupons_index_2_usage_end_date); Using where |
+
+## How do indexes work in range search
 
 ## Some good explanations of SQL indexes
 
