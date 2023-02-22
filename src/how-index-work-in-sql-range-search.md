@@ -4,6 +4,8 @@ I always need clarification about indexes, how they work, and why they can impro
 
 ## TL;DR
 
+- Rule of thumb: index for equality first then for ranges.
+
 ## What are SQL indexes
 
 SQL indexes are just like a book's table of contents, which links a chapter title to its contents by page numbers. Like the table of contents, SQL indexes are sorted too. Technically speaking, SQL indexes have a sortable B-Tree (balanced search tree) structure.
@@ -29,8 +31,8 @@ Other than the index of the primary key coupon_code, there are two indexes for c
 | coupon_code   | corporation_code | point_rate | usage_start_date    | usage_end_date      | distribution_limit |
 | ------------- | ---------------- | ---------- | ------------------- | ------------------- | ------------------ |
 | coupon_code_1 | corporation_a    | 0.0100     | 2023-01-03 00:00:00 | 2023-02-03 00:00:00 | 10000              |
-| coupon_code_2 | corporation_a    | 0.0100     | 2023-01-02 00:00:00 | 2023-02-02 00:00:00 | 10000              |
-| coupon_code_3 | corporation_a    | 0.0100     | 2023-01-01 00:00:00 | 2023-02-01 00:00:00 | 10000              |
+| coupon_code_2 | corporation_a    | 0.0100     | 2023-01-02 00:00:00 | 2023-02-02 00:00:00 | 20000              |
+| coupon_code_3 | corporation_a    | 0.0100     | 2023-01-01 00:00:00 | 2023-02-01 00:00:00 | 20000              |
 
 When we perform the following query without any index,
 
@@ -96,10 +98,42 @@ The execution plan for this query is
 
 The index search will start at the first index greater than or equal to '2023-01-01' and end at the first index greater than '2023-01-02'. All rows inside the searched range will be fetched. In this case, the database engine will fetch two rows with id 3 and 2.
 
+Next, we add another condition to the query.
+
+```sql
+SELECT * FROM coupons WHERE usage_start_date BETWEEN '2023-01-01' AND '2023-01-02' AND distribution_limit = 20000;
+```
+
+It is obvious that we need an index covering both usage_start_date and distribution_limit columns to optimize this query. The question is in which order? We have two options.
+
+coupons_index_3 (usage_start_date, distribution_limit)
+
+| usage_start_date | distribution_limit | row_id |
+| ---------------- | ------------------ | ------ |
+| 2023-01-01       | 10000              | 3      |
+| 2023-01-02       | 20000              | 2      |
+| 2023-01-03       | 20000              | 1      |
+
+coupon_index_4 (distribution_limit, usage_start_date)
+
+| distribution_limit | usage_start_date | row_id |
+| ------------------ | ---------------- | ------ |
+| 10000              | 2023-01-01       | 3      |
+| 20000              | 2023-01-02       | 2      |
+| 20000              | 2023-01-03       | 1      |
+
+In this case, they can both perform well and limit a single row to fetch. The difference is in the range of the index scan. For index coupons_index_3, usage_start_date is the only column that defines the index scan range because the search condition of usage_start_date is a range, and the database engine needs to scan all leaf nodes within the range to determine which rows to fetch. From the execution plan, we can tell that rows with id 3 and 2 are scanned, then distribution_limit is used to filter out row 1, resulting in a 50% filtering rate.
+
+| id  | select_type | table   | partitions | type  | possible_keys                                                    | key             | key_len | ref | rows | filtered | Extra                 |
+| --- | ----------- | ------- | ---------- | ----- | ---------------------------------------------------------------- | --------------- | ------- | --- | ---- | -------- | --------------------- |
+| 1   | SIMPLE      | coupons |            | range | coupons_index_1_usage_start_date,coupons_index_3,coupons_index_4 | coupons_index_3 | 8       |     | 1    | 50.00    | Using index condition |
+
+| id  | select_type | table   | partitions | type  | possible_keys                                    | key             | key_len | ref | rows | filtered | Extra                 |
+| --- | ----------- | ------- | ---------- | ----- | ------------------------------------------------ | --------------- | ------- | --- | ---- | -------- | --------------------- |
+| 1   | SIMPLE      | coupons |            | range | coupons_index_1_usage_start_date,coupons_index_4 | coupons_index_4 | 8       |     | 1    | 100.00   | Using index condition |
+
 ## Some good explanations of SQL indexes
 
-https://chartio.com/learn/databases/how-does-indexing-work/
-
-https://use-the-index-luke.com/sql/anatomy/the-tree
-
-https://use-the-index-luke.com/sql/where-clause/searching-for-ranges/greater-less-between-tuning-sql-access-filter-predicates
+- [How Does Indexing Work](https://chartio.com/learn/databases/how-does-indexing-work/)
+- [The Search Tree (B-Tree) Makes the Index Fast](https://use-the-index-luke.com/sql/anatomy/the-tree)
+- [Greater, Less and BETWEEN](https://use-the-index-luke.com/sql/where-clause/searching-for-ranges/greater-less-between-tuning-sql-access-filter-predicates)
