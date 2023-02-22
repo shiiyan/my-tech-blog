@@ -122,7 +122,7 @@ coupon_index_4 (distribution_limit, usage_start_date)
 | 20000              | 2023-01-02       | 2      |
 | 20000              | 2023-01-03       | 1      |
 
-In this case, they can both perform well and limit a single row to fetch. The difference is in the range of the index scan. For index coupons_index_3, usage_start_date is the only column that defines the index scan range because the search condition of usage_start_date is a range, and the database engine needs to scan all leaf nodes within the range to determine which rows to fetch. From the execution plan, we can tell that rows with id 3 and 2 are scanned, then distribution_limit is used to filter out row 1, resulting in a 50% filtering rate.
+In this case, they can both perform well and limit fetch targets to a single row. The difference is in the range of the index scan. For index coupons_index_3, usage_start_date is the only column that defines the index scan range because the search condition of usage_start_date is a range, and the database engine needs to scan all leaf nodes within the range to determine which rows to fetch. From the execution plan, we can tell that rows with id 3 and 2 are scanned, then distribution_limit is used to filter out row 1, resulting in a 50% filtering rate.
 
 | id  | select_type | table   | partitions | type  | possible_keys                                                    | key             | key_len | ref | rows | filtered | Extra                 |
 | --- | ----------- | ------- | ---------- | ----- | ---------------------------------------------------------------- | --------------- | ------- | --- | ---- | -------- | --------------------- |
