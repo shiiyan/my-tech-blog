@@ -36,6 +36,8 @@ Other than the index of the primary key coupon_code, there are two indexes for c
 | coupon_code_2 | corporation_a    | 0.0100     | 2023-01-02 00:00:00 | 2023-02-02 00:00:00 | 20000              |
 | coupon_code_3 | corporation_a    | 0.0100     | 2023-01-01 00:00:00 | 2023-02-01 00:00:00 | 20000              |
 
+### a query with single condition
+
 When we perform the following query without any index,
 
 ```sql
@@ -70,6 +72,8 @@ The execution plan for the same query becomes
 
 Instead of a full table scan, the database engine fetches one row this time. Since all dates in the database are older than the provided date, the index search will stop at the first node of 2023-01-01, resulting in an empty set.
 
+### a query with multiple conditions
+
 Now we add some complexity to the query's where condition. Consider the following query,
 
 ```sql
@@ -90,7 +94,7 @@ If there are indexes, the database engine will utilize two indexes of column usa
 
 ## How do indexes work in range search
 
-### simple range condition
+### single range condition
 
 Consider the following query.
 
