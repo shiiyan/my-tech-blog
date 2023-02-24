@@ -1,10 +1,12 @@
-# How do indexes work in SQL range search
+# How do indexes work in SQL range search?
 
 I always need clarification about indexes, how they work, and why they can improve SQL query performance. In this article, I want to answer these questions by exploring an example of a range search. If you have the same questions, this article will help you.
 
 ## TL;DR
 
-- Rule of thumb: index for equality first then for ranges.
+- SQL indexes have a sortable B-Tree (balanced search tree) structure.
+- SQL range queries utilize indexes in the form of index range scans.
+- Setting equality columns before range columns in an index leads to better performance.
 
 ## What are SQL indexes
 
@@ -56,6 +58,10 @@ Now we add the index for usage_start_date like the one below.
 | 2023-01-02       | 2      |
 | 2023-01-03       | 1      |
 
+This table is just an image of the structure of an index. In reality, indexes have a structure of B-tree, which consists of root nodes, branch nodes, and leaf nodes. For more on this, see the linked article below.
+
+- [The Search Tree (B-Tree) Makes the Index Fast](https://use-the-index-luke.com/sql/anatomy/the-tree)
+
 The execution plan for the same query becomes
 
 | id  | select_type | table   | partitions | type | possible_keys                    | key                              | key_len | ref   | rows | filtered | Extra |
@@ -84,6 +90,8 @@ If there are indexes, the database engine will utilize two indexes of column usa
 
 ## How do indexes work in range search
 
+### simple range condition
+
 Consider the following query.
 
 ```sql
@@ -97,6 +105,8 @@ The execution plan for this query is
 | 1   | SIMPLE      | coupons |            | range | coupons_index_1_usage_start_date | coupons_index_1_usage_start_date | 4       |     | 2    | 100.00   | Using index condition |
 
 The index search will start at the first index greater than or equal to '2023-01-01' and end at the first index greater than '2023-01-02'. All rows inside the searched range will be fetched. In this case, the database engine will fetch two rows with id 3 and 2.
+
+### range condition combined with equality condition
 
 Next, we add another condition to the query.
 
@@ -122,18 +132,18 @@ coupon_index_4 (distribution_limit, usage_start_date)
 | 20000              | 2023-01-02       | 2      |
 | 20000              | 2023-01-03       | 1      |
 
-In this case, they can both perform well and limit fetch targets to a single row. The difference is in the range of the index scan. For index coupons_index_3, usage_start_date is the only column that defines the index scan range because the search condition of usage_start_date is a range, and the database engine needs to scan all leaf nodes within the range to determine which rows to fetch. From the execution plan, we can tell that rows with id 3 and 2 are scanned, then distribution_limit is used to filter out row 1, resulting in a 50% filtering rate.
+In this case, they can both perform well and limit fetch targets to a single row. The difference is in the range of the index scan. For index coupons_index_3, usage_start_date is the only column that defines the index scan range because the search condition of usage_start_date is a type of range, and the database engine needs to scan all leaf nodes within the range to determine which rows to fetch. From the execution plan, we can tell that rows with id 3 and 2 are scanned, then distribution_limit is used to filter out row 1, resulting in a 50% filtering rate.
 
 | id  | select_type | table   | partitions | type  | possible_keys                                                    | key             | key_len | ref | rows | filtered | Extra                 |
 | --- | ----------- | ------- | ---------- | ----- | ---------------------------------------------------------------- | --------------- | ------- | --- | ---- | -------- | --------------------- |
 | 1   | SIMPLE      | coupons |            | range | coupons_index_1_usage_start_date,coupons_index_3,coupons_index_4 | coupons_index_3 | 8       |     | 1    | 50.00    | Using index condition |
 
+In contrast, having the equality column distribution_limit in the front, index coupons_index_4 utilizes all two columns to narrow down the index scan range. Since coupons_index_4 covers all columns in the search condition, the database engine can use the index only to determine to fetch the row with id 2. This results in a 100% filtering rate, which is no filtering at all after the index has been searched.
+
 | id  | select_type | table   | partitions | type  | possible_keys                                    | key             | key_len | ref | rows | filtered | Extra                 |
 | --- | ----------- | ------- | ---------- | ----- | ------------------------------------------------ | --------------- | ------- | --- | ---- | -------- | --------------------- |
 | 1   | SIMPLE      | coupons |            | range | coupons_index_1_usage_start_date,coupons_index_4 | coupons_index_4 | 8       |     | 1    | 100.00   | Using index condition |
 
-## Some good explanations of SQL indexes
+In general, setting equality columns before range columns in an index can lead to better performance. For details explanations on this topic, please refer to the article below.
 
-- [How Does Indexing Work](https://chartio.com/learn/databases/how-does-indexing-work/)
-- [The Search Tree (B-Tree) Makes the Index Fast](https://use-the-index-luke.com/sql/anatomy/the-tree)
 - [Greater, Less and BETWEEN](https://use-the-index-luke.com/sql/where-clause/searching-for-ranges/greater-less-between-tuning-sql-access-filter-predicates)
