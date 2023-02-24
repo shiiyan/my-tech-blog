@@ -62,7 +62,7 @@ Now we add the index for usage_start_date like the one below.
 
 This table is just an image of the structure of an index. In reality, indexes have a structure of B-tree, which consists of root nodes, branch nodes, and leaf nodes. For more on this, see the linked article below.
 
-- [The Search Tree (B-Tree) Makes the Index Fast](https://use-the-index-luke.com/sql/anatomy/the-tree)
+[The Search Tree (B-Tree) Makes the Index Fast](https://use-the-index-luke.com/sql/anatomy/the-tree)
 
 The execution plan for the same query becomes
 
@@ -150,4 +150,4 @@ In contrast, having the equality column distribution_limit in the front, index c
 
 In general, setting equality columns before range columns in an index can lead to better performance. For details explanations on this topic, please refer to the article below.
 
-- [Greater, Less and BETWEEN](https://use-the-index-luke.com/sql/where-clause/searching-for-ranges/greater-less-between-tuning-sql-access-filter-predicates)
+[Greater, Less and BETWEEN](https://use-the-index-luke.com/sql/where-clause/searching-for-ranges/greater-less-between-tuning-sql-access-filter-predicates)
