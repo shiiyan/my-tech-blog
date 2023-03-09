@@ -8,6 +8,14 @@ https://medium.com/@shiiyan/how-do-indexes-work-in-sql-range-search-4746cbcb01ce
 
 ## simple NOT query
 
+Suppose table `coupons` has the following test data.
+
+| coupon_code   | corporation_code | point_rate | usage_start_date    | usage_end_date      | distribution_limit |
+| ------------- | ---------------- | ---------- | ------------------- | ------------------- | ------------------ |
+| coupon_code_1 | corporation_a    | 0.0100     | 2023-01-03 00:00:00 | 2023-02-03 00:00:00 | 10000              |
+| coupon_code_2 | corporation_a    | 0.0100     | 2023-01-02 00:00:00 | 2023-02-02 00:00:00 | 20000              |
+| coupon_code_3 | corporation_a    | 0.0100     | 2023-01-01 00:00:00 | 2023-02-01 00:00:00 | 20000              |
+
 A simple NOT query in MySQL is effectively the same as an OR query covering the negative value's upper and lower range.
 
 ```sql
