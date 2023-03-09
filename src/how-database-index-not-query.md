@@ -16,7 +16,7 @@ SELECT * FROM coupons WHERE NOT (usage_start_date = '2023-01-02');
 SELECT * FROM coupons WHERE usage_start_date < '2023-01-02' OR usage_start_date > '2023-01-02';
 ```
 
-These two queries both have the same execution plan. The database engine scans one row for each half of the OR condition `usage_start_date < '2023-01-02` and `usage_start_date > '2023-01-02`. Then it combines the scanned range resulting in two rows in the execution plan below.
+These two queries both have the same execution plan. The database engine scans one row for each half of the OR condition `usage_start_date < '2023-01-02` and `usage_start_date > '2023-01-02`. Then it combines the scanned range resulting in column `rows` being 2 in the execution plan below.
 
 | id  | select_type | table   | partitions | type  | possible_keys                    | key                              | key_len | ref | rows | filtered | Extra                 |
 | --- | ----------- | ------- | ---------- | ----- | -------------------------------- | -------------------------------- | ------- | --- | ---- | -------- | --------------------- |
