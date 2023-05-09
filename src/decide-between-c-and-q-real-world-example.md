@@ -4,11 +4,13 @@
 
 ## The Choice in CQRS
 
-CQRS (Command-Query Responsibility Segregation) provides us with a choice between the read model and the domain model. We can either create a collection of data as a domain model, which will be saved in a data store, or we can create it as a read model, which we reconstruct using the data fetched from a data store.
+CQRS (Command-Query Responsibility Segregation) provides us with a choice between the read model and the domain model. A domain model represents a collection of valid data persisted in a data store. Meanwhile, a read model, usually as a DTO (Data Transfer Object), is the return value of a query service. The query service uses the data from the data store, which could be from more than one domain model, to construct a read model.
 
-<figure>
+> insert figure of CQRS (domain model and read model)
 
-## How to make the choice
+Should we use the domain model or the read model while implementing a user story that involves a new collection of data?
+
+## What kind of model should we use
 
 ### Our User Stories
 
