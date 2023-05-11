@@ -14,17 +14,26 @@ Should we use the domain model or the read model while implementing a user story
 
 ### Our User Stories
 
-User
+Suppose we have a blog site comprising the following user stories.
+
+- A guest can submit a guest post without registration.
+- A member can submit a member post after registration.
+- A post requires a title, email address of the writer, and content.
+- The site admin can get a total number of posts, including both guest posts and member posts, grouped by email address.
+
+We might create models of users and posts in this way.
+
+UserInterface
 
 - Guest
 - Member
 
-Post
+PostInterface
 
 - GuestPost
 - MemberPost
 
-UserPostCount as Read Model (Q) or Domain Model (C)
+Should we model UserPostCount as Read Model (Q) or Domain Model (C)
 
 ### A New User Story
 
