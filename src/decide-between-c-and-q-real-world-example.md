@@ -6,7 +6,7 @@
 
 CQRS (Command-Query Responsibility Segregation) provides us with a choice between the read model and the domain model. A domain model represents a collection of valid data persisted in a data store. Meanwhile, a read model, usually as a DTO (Data Transfer Object), is the return value of a query service. The query service uses the data from the data store, which could be from more than one domain model, to construct a read model.
 
-> insert figure of CQRS (domain model and read model)
+<img src="https://github.com/shiiyan/my-tech-blog/assets/36617009/121aca27-6b79-4788-974d-9eb0e54978fc" width="300">
 
 Should we use the domain model or the read model while implementing a user story that involves a new collection of data?
 
@@ -23,17 +23,13 @@ Suppose we have a blog site comprising the following user stories.
 
 We might create models of users and posts in this way.
 
-UserInterface
+<img src="https://github.com/shiiyan/my-tech-blog/assets/36617009/35b68e25-ef6f-4cda-83e3-0a765605847a" width="300">
 
-- Guest
-- Member
+Should we create User and UserPostCount as Read Models or Domain Models?
 
-PostInterface
+<img src="https://github.com/shiiyan/my-tech-blog/assets/36617009/67b073cf-ec4f-4550-b56d-ca854cedb3cd" width="300">
 
-- GuestPost
-- MemberPost
-
-Should we model UserPostCount as Read Model (Q) or Domain Model (C)
+<img src="https://github.com/shiiyan/my-tech-blog/assets/36617009/9c7d5378-83e7-43c4-9470-0cc8415af434" width="300">
 
 ### A New User Story
 
