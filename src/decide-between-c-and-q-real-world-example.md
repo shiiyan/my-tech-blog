@@ -21,7 +21,7 @@ Suppose we have a blog site comprising the following user stories.
 - A post requires a title, email address of the writer, and content.
 - The site admin can get a total number of posts and a list of past posts, including both guest posts and member posts, grouped by email address.
 
-Fist, we might create models of Guest and GuestPost, Member and MemberPost in this way.
+First, we might create models of Guest and GuestPost, Member and MemberPost in this way.
 
 <img src="https://github.com/shiiyan/my-tech-blog/assets/36617009/35b68e25-ef6f-4cda-83e3-0a765605847a" width="300">
 
