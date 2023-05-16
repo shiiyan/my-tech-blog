@@ -39,9 +39,20 @@ At this point, it is hard to say which way is better. It appears to be a waste o
 
 ### A New User Story
 
-new requirement
+An additional requirement has been added to our user stroies.
 
-UserGroup
+- An administrator of the website can make user groups based on the number of posts by users.
+- A user group containes a name, the conditions needed to be part of the group and the users that belong to it.
+
+First, we should create an aggregation known as UserGroup.
+
+<img src="https://github.com/shiiyan/my-tech-blog/assets/36617009/d9d85f87-1b29-4c7a-bf09-e33c4e6dbe1a" width="300">
+
+The diagram indicates that we need to include UserId, which is the User's identifier, as well as the identifier of a GroupMember. It's difficult to model a group member using only Guest and Member, since UserGroup is made up of User, not Guests or Members.
+
+Now, User is no longer an aggregation result that is displayed on the admin page, but it is an essential domain with an identifier that is a dependency of another domain.
+
+What about UserPostCount?
 
 ### Retrospective
 
