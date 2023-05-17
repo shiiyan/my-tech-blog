@@ -1,7 +1,5 @@
 # Choice between Read Model and Domain Model: Explained With Real World CQRS Example
 
-## TL;DR
-
 ## The Choice in CQRS
 
 CQRS (Command-Query Responsibility Segregation) provides us with a choice between the read model and the domain model. A domain model represents a collection of valid data persisted in a data store. Meanwhile, a read model, usually as a DTO (Data Transfer Object), is the return value of a query service. The query service uses the data from the data store, which could be from more than one domain model, to construct a read model.
@@ -48,11 +46,25 @@ First, we should create an aggregation known as UserGroup.
 
 <img src="https://github.com/shiiyan/my-tech-blog/assets/36617009/d9d85f87-1b29-4c7a-bf09-e33c4e6dbe1a" width="300">
 
-The diagram indicates that we need to include UserId, which is the User's identifier, as well as the identifier of a GroupMember. It's difficult to model a group member using only Guest and Member, since UserGroup is made up of User, not Guests or Members.
+The diagram indicates that we need to include UserId, which is the User's identifier, as well as the identifier of a GroupMember. It's difficult to model a group member using only Guest and Member, since UserGroup is made up of User, not Guests or Members. Now, User is no longer an aggregation result that is displayed on the admin page, but it is an essential domain with an identifier that is a dependency of another domain.
 
-Now, User is no longer an aggregation result that is displayed on the admin page, but it is an essential domain with an identifier that is a dependency of another domain.
+Next, let’s consider UserPostCount. If we keep treating it as a read model, then these use cases must be implemented to meet the requirements.
 
-What about UserPostCount?
+- Whenever the administrator accesses the user admin page, we calculate the total number of posts from MemberPosts and GuestPosts that have the same email address as the User.
+- Whenever the administrator creates a new UserGroup or changes the GroupCondition of an existing UserGroup, we calculate the UserPostCount of all Users and decide who belongs to the new group by comparing the UserPostCount of the User and of the GroupCondition.
+- Whenever a User submits a new post, we gathering the GroupCondtion of all UserGroups and decide which group the User should join by comparing the UserPostCount of the GroupCondition and of the User.
+
+The calculation of UserPostCount using GuestPosts and MemberPosts appeared in all three use cases. Dependency is a consequence of duplication, so if we alter the UserPostCount calculation, we have to guarantee the three use cases all still work.
+
+Although, it doesn't change the fact.
+
+We have to make sure use case
+
+once and only once.
+
+becomes a reasonable choice.
+
+the complete domain models of UserAggregation is the following.
 
 ### Retrospective
 
