@@ -37,10 +37,10 @@ At this point, it is hard to say which way is better. It appears to be a waste o
 
 ### A New User Story
 
-An additional requirement has been added to our user stroies.
+An additional requirement has been added to our user stories.
 
 - An administrator of the website can make user groups based on the number of posts by users.
-- A user group containes a name, the conditions needed to be part of the group and the users that belong to it.
+- A user group contains a name, the conditions needed to be part of the group and the users that belong to it.
 
 First, we should create an aggregation known as UserGroup.
 
@@ -52,7 +52,7 @@ Next, let’s consider UserPostCount. If we keep treating it as a read model, th
 
 - Whenever the administrator accesses the user admin page, we calculate the total number of posts from MemberPosts and GuestPosts that have the same email address as the User.
 - Whenever the administrator creates a new UserGroup or changes the GroupCondition of an existing UserGroup, we calculate the UserPostCount of all Users and decide who belongs to the new group by comparing the UserPostCount of the User and of the GroupCondition.
-- Whenever a User submits a new post, we gathering the GroupCondtion of all UserGroups and decide which group the User should join by comparing the UserPostCount of the GroupCondition and of the User.
+- Whenever a User submits a new post, we gathering the GroupCondition of all UserGroups and decide which group the User should join by comparing the UserPostCount of the GroupCondition and of the User.
 
 The calculation of UserPostCount using GuestPosts and MemberPosts appeared in all three use cases. Dependency is a consequence of duplication, so if we alter the UserPostCount calculation, we have to guarantee the three use cases all still work.
 
