@@ -56,13 +56,11 @@ Next, let’s consider UserPostCount. If we keep treating it as a read model, th
 
 The calculation of UserPostCount using GuestPosts and MemberPosts appeared in all three use cases. Duplication is connected with dependency, so if we alter the UserPostCount calculation, we have to guarantee the three use cases all still work.
 
-We can eliminate duplication by creating a CountUserPostQueryService, a common query service for calculating UserPostCount, and injecting it into the use cases. But it does not change the fact that these use cases still rely on GuestPosts and MemberPosts, instead of UserPostCount directly.
-
-From this perspective, implementing UserPostCount as a domain model is a more reasonable choice.
+We can eliminate duplication by creating a CountUserPostQueryService, a common query service for calculating UserPostCount, and injecting it into the use cases. But it does not change the fact that these use cases still rely on GuestPosts and MemberPosts, instead of UserPostCount directly. From this perspective, implementing UserPostCount as a domain model is a more reasonable choice.
 
 Here is the completed domain model of UserAggregation.
 
-<img src="https://github.com/shiiyan/my-tech-blog/assets/36617009/8cf431da-11ed-4a04-971a-4edae2ee45c1" width="300">
+<img src="https://github.com/shiiyan/my-tech-blog/assets/36617009/8cf431da-11ed-4a04-971a-4edae2ee45c1" width="500">
 
 ### Retrospective
 
