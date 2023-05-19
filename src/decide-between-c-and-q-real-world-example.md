@@ -54,21 +54,23 @@ Next, let’s consider UserPostCount. If we keep treating it as a read model, th
 - Whenever the administrator creates a new UserGroup or changes the GroupCondition of an existing UserGroup, we calculate the UserPostCount of all Users and decide who belongs to the new group by comparing the UserPostCount of the User and of the GroupCondition.
 - Whenever a User submits a new post, we gathering the GroupCondition of all UserGroups and decide which group the User should join by comparing the UserPostCount of the GroupCondition and of the User.
 
-The calculation of UserPostCount using GuestPosts and MemberPosts appeared in all three use cases. Dependency is a consequence of duplication, so if we alter the UserPostCount calculation, we have to guarantee the three use cases all still work.
+The calculation of UserPostCount using GuestPosts and MemberPosts appeared in all three use cases. Duplication is connected with dependency, so if we alter the UserPostCount calculation, we have to guarantee the three use cases all still work.
 
-Although, it doesn't change the fact.
+We can eliminate duplication by creating a CountUserPostQueryService, a common query service for calculating UserPostCount, and injecting it into the use cases. But it does not change the fact that these use cases still rely on GuestPosts and MemberPosts, instead of UserPostCount directly.
 
-We have to make sure use case
+From this perspective, implementing UserPostCount as a domain model is a more reasonable choice.
 
-once and only once.
+Here is the completed domain model of UserAggregation.
 
-becomes a reasonable choice.
-
-the complete domain models of UserAggregation is the following.
+<img src="https://github.com/shiiyan/my-tech-blog/assets/36617009/8cf431da-11ed-4a04-971a-4edae2ee45c1" width="300">
 
 ### Retrospective
 
 how did we make the chioce
+
+once and once only
+
+or SRP
 
 ## Further Reading
 
