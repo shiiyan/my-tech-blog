@@ -56,7 +56,7 @@ Next, let’s consider UserPostCount. If we keep treating it as a read model, th
 
 The calculation of UserPostCount using GuestPosts and MemberPosts appeared in all three use cases. Duplication is connected with dependency, so if we alter the UserPostCount calculation, we have to guarantee the three use cases all still work.
 
-We can eliminate duplication by creating a CountUserPostQueryService, a common query service for calculating UserPostCount, and injecting it into the use cases. But it does not change the fact that these use cases still rely on GuestPosts and MemberPosts, instead of UserPostCount directly. From this perspective, implementing UserPostCount as a domain model is a more reasonable choice.
+We can eliminate duplication by creating a CountUserPostQueryService, a common query service for calculating UserPostCount, and injecting it into the use cases. But it does not change the fact that these use cases still rely on GuestPosts and MemberPosts, instead of UserPostCount directly. From this perspective, implementing UserPostCount as a read model would not be a very reasonable choice.
 
 Here is the completed domain model of UserAggregation.
 
@@ -64,11 +64,9 @@ Here is the completed domain model of UserAggregation.
 
 ### Retrospective
 
-how did we make the chioce
+The decision between using a domain model or read model has no right answer. The answer will depend on the user stories we have and the system requirements we must meet. As long as we keep things reversible, we can try different approaches to find the best choice.
 
-once and once only
-
-or SRP
+When making decisions, it's helpful to remember two good principles: reducing duplication and doing things once and once only. If a model is utilized by several domain models or use cases, making it a domain model would be a good starting point.
 
 ## Further Reading
 
