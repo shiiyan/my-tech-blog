@@ -4,6 +4,21 @@ Mocking can be helpful in testing as it simplifies fixture preparation and speed
 
 ## Mocking a test
 
+Let’s consider implementing this user story using a three-layered DDD architecture.
+
+- Customers can make orders for products.
+
+We might create these classes.
+
+- Controller
+  - OrderController
+- UseCase
+  - MakeOrderUseCase
+- Domain
+  - Order
+  - Product
+  - Customer
+
 ## Comparison of mocking and not mocking
 
 ## Conclusion
