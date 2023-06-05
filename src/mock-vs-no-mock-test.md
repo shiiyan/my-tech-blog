@@ -4,20 +4,34 @@ Mocking can be helpful in testing as it simplifies fixture preparation and speed
 
 ## Mocking a test
 
-Let’s consider implementing this user story using a three-layered DDD architecture.
+Let’s consider implementing this user story.
 
 - Customers can make orders for products.
 
-We might create these classes.
+According to the three-layered DDD architecture, we might have these classes.
 
-- Controller
+- Controller Layer
   - OrderController
-- UseCase
+- Use Case Layer
   - MakeOrderUseCase
-- Domain
+- Domain Layer
   - Order
   - Product
   - Customer
+
+The following is a possible implementation of OrderController.
+
+```php
+class OrderController {
+	public function makeOrder(int $productId, int $customerId) {
+    // validations of $productId and $customerId.
+    $order = $this->makeOrderUseCase->handle($productId, $customerId);
+    return $order;
+  }
+}
+```
+
+how should we test this controller?
 
 ## Comparison of mocking and not mocking
 
