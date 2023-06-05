@@ -6,7 +6,7 @@ Mocking can be helpful in testing as it simplifies fixture preparation and speed
 
 Let’s consider implementing this user story.
 
-- Customers can make orders for products.
+- Customers can make orders of products.
 
 According to the three-layered DDD architecture, we might have these classes.
 
