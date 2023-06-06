@@ -58,12 +58,28 @@ When structural and behavioral changes of MakeOrderUseCase like above occur freq
 
 ```php
 class OrderControllerTest {
+  public function testMakeOrder() {
+    // prepare test data
+    $this->ProductRepository->save($product); // productId: 1
+    $this->CustomerRepository->save($customer); // customerId: 1
 
+    // execute
+    $sut = new OrderController();
+    $actual = $sut->makeOrder(1, 1);
 
+    // assert
+    $expected = $order;
+    $this->assertEquals($expected, $actual);
+
+    // clear
+    $this->ProductRepository->clear();
+    $this->CustomerRepository->clear();
+    $this->OrderRepository->clear();
+  }
 }
-
-
 ```
+
+This approach reduces the direct dependency of OrderControllerTest on MakeOrderUseCase at the cost of making it more expensive to create and run the test. Before running the test, we have to create and save a sample Product and Customer to the repositories. A connection to the test database is probably needed when executing the test. We clear all repositories after the test is done.
 
 ## Should we mock or not
 
