@@ -83,11 +83,18 @@ This approach reduces the direct dependency of OrderControllerTest on MakeOrderU
 
 ## Should we mock or not
 
-It it not a simple linear question.
+Should we use mock or not is not a simple yes or no question. First, we consider the cost of test creation and execution.
 
-First we conside the cost of create a test.
+<img width="500" alt="image" src="https://github.com/shiiyan/my-tech-blog/assets/36617009/7d445895-c151-44b5-9ca8-b1e4ce2810d6">
 
-In figure, we can have the following one.
+It's always easier to write and run mocked tests than unmocked ones, regardless of the number of test cases. As the number of test cases increase, I've noticed that the time it takes me to write an additional test case also increases. This is because when dealing with edge cases, a significant portion of the time is spent on designing the test, rather than writing the actual test code.
+
+<img width="500" alt="image" src="https://github.com/shiiyan/my-tech-blog/assets/36617009/54d4dd8e-c130-4c7d-a102-56d9303ba8b4">
+
+combination of both.
+
+unmocked test to cover the base test case to ensure the is during refactoring and development.
+mocked test to cover the edge case. for example exception reduce the cost of making a test.
 
 ## Conclusion
 
