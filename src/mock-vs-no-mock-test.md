@@ -43,8 +43,10 @@ class OrderControllerTest {
     $sut = new OrderController();
     $sut->makeOrderUseCase = $mockUseCase;
 
-    // execute and assert
+    // execute
     $actual = $sut->makeOrder(1, 1);
+
+    // assert
     $this->assertEquals($order, $actual);
   }
 }
@@ -71,7 +73,7 @@ class OrderControllerTest {
     $expected = $order;
     $this->assertEquals($expected, $actual);
 
-    // clear
+    // clear test data
     $this->ProductRepository->clear();
     $this->CustomerRepository->clear();
     $this->OrderRepository->clear();
@@ -89,11 +91,9 @@ Should we use mock or not is not a simple yes or no question. First, we consider
 
 It's always easier to write and run mocked tests than unmocked ones, regardless of the number of test cases. As the number of test cases increase, I've noticed that the time it takes me to write an additional test case also increases. This is because when dealing with edge cases, a significant portion of the time is spent on designing the test, rather than writing the actual test code.
 
-<img width="500" alt="image" src="https://github.com/shiiyan/my-tech-blog/assets/36617009/3c1983ce-c876-4ec0-802f-a7e33a185f91">
+<img width="500" alt="image" src="https://github.com/shiiyan/my-tech-blog/assets/36617009/3b41dfbe-5237-47ae-a63f-df8b72152154">
 
-Now, taking into account test efficiency, namely the ability of a test to ensure system quality. 
-
-If the edge case is 1% and we don't deal with it,we still have our system function normal in 99% of the time.
+Now, taking into account test effectiveness, namely the ability of a test to ensure system quality. Test effectiveness improvement decelerates with an increase in the number of test cases. Writing a test to cover an edge case that happens only 1% of the time will only increase test efficiency by 1%. At a certain point, the cost of creating a rare case test outweighs its effectiveness.
 
 unmocked test to cover the base test case to ensure the is during refactoring and development.
 mocked test to cover the edge case. for example exception reduce the cost of making a test.
