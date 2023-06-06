@@ -89,9 +89,11 @@ Should we use mock or not is not a simple yes or no question. First, we consider
 
 It's always easier to write and run mocked tests than unmocked ones, regardless of the number of test cases. As the number of test cases increase, I've noticed that the time it takes me to write an additional test case also increases. This is because when dealing with edge cases, a significant portion of the time is spent on designing the test, rather than writing the actual test code.
 
-<img width="500" alt="image" src="https://github.com/shiiyan/my-tech-blog/assets/36617009/54d4dd8e-c130-4c7d-a102-56d9303ba8b4">
+<img width="500" alt="image" src="https://github.com/shiiyan/my-tech-blog/assets/36617009/3c1983ce-c876-4ec0-802f-a7e33a185f91">
 
-combination of both.
+Now, taking into account test efficiency, namely the ability of a test to ensure system quality. 
+
+If the edge case is 1% and we don't deal with it,we still have our system function normal in 99% of the time.
 
 unmocked test to cover the base test case to ensure the is during refactoring and development.
 mocked test to cover the edge case. for example exception reduce the cost of making a test.
