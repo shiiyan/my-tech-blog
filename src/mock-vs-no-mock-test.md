@@ -54,7 +54,7 @@ The test is effective as long as MakeOrderUseCase complies with its contract wit
 
 It sometimes becomes problematic that the mocked test cannot detect changes in the content of MakeOrderUseCase's return value. The return value can be any Order, but OrderController only needs the newly created one to return to the client, which the test cannot guarantee.
 
-When structural and behavioral changes of MakeOrderUseCase occur frequently, it may be a better idea to create an unmocked test.
+When structural and behavioral changes of MakeOrderUseCase like above occur frequently, it may be a better idea to create an unmocked test.
 
 ```php
 class OrderControllerTest {
