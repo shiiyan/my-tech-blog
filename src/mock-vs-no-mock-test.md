@@ -50,7 +50,7 @@ class OrderControllerTest {
 }
 ```
 
-The test is effective as long as MakeOrderUseCase complies with its contract with OrderController, and keeps its interface unchanged. If we rename the use case to PlaceOrderUseCase, we have to update our mock first to avoid a Class Not Found error.
+The test is effective as long as MakeOrderUseCase complies with its contract with OrderController, and keeps its interface unchanged. If we rename the use case to PlaceOrderUseCase for example, we have to update our mock first to avoid a Class Not Found error.
 
 It sometimes becomes problematic that the mocked test cannot detect changes in the content of MakeOrderUseCase's return value. The return value can be any Order, but OrderController only needs the newly created one to return to the client, which the test cannot guarantee.
 
