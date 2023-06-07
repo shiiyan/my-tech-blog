@@ -95,9 +95,4 @@ It's always easier to write and run mocked tests than unmocked ones, regardless 
 
 Now, taking into account test effectiveness, namely the ability of a test to ensure system quality. Test effectiveness improvement decelerates with an increase in the number of test cases. Writing a test to cover an edge case that happens only 1% of the time will only increase test efficiency by 1%. At a certain point, the cost of creating a rare case test outweighs its effectiveness.
 
-unmocked test to cover the base test case to ensure the is during refactoring and development.
-mocked test to cover the edge case. for example exception reduce the cost of making a test.
-
-## Conclusion
-
-## References 
+Based on the analysis, I prefer using a combination of mocked and unmocked tests to strike a balance between cost and effectiveness. I use unmocked tests for common cases and mocked ones for rare cases.
