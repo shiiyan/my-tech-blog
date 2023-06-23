@@ -19,21 +19,29 @@ class Table {
   }
 }
 
-class ActiveRecord {
+abstract class ActiveRecord {
+  protected id?: number;
   private table: Table;
 
   constructor() {
-    const tableName = this.constructor.name.toLowerCase();
-    this.table = new Table(tableName);
+    this.table = new Table(this.constructor.name.toLowerCase());
+  }
+
+  public getId(): number | undefined {
+    return this.id;
+  }
+
+  public setId(id: number): void {
+    this.id = id;
   }
 
   public create() {
     const propertyNames = Object.getOwnPropertyNames(this).filter(
-      (propertyName: string) => propertyName !== "id"
+      (propertyName: string) => !["id", "table"].includes(propertyName)
     );
     const params = propertyNames.map((propertyName: string) => ({
       columnName: propertyName,
-      value: <string>this[propertyName],
+      value: <string>this[propertyName as keyof this],
     }));
 
     this.table.insert(params);
@@ -47,14 +55,10 @@ class ActiveRecord {
 }
 
 class Orders extends ActiveRecord {
-  private id?: number;
   private itemId?: number;
   private itemPrice?: number;
   private quantity?: number;
 
-  public getId(): number | undefined {
-    return this.id;
-  }
   public getItemId(): number | undefined {
     return this.itemId;
   }
@@ -65,9 +69,6 @@ class Orders extends ActiveRecord {
     return this.quantity;
   }
 
-  public setId(id: number): void {
-    this.id = id;
-  }
   public setItemId(itemId: number) {
     this.itemId = itemId;
   }
