@@ -17,10 +17,6 @@ class Table {
     const query = `INSERT INTO ${this.tableName} () VALUES ();`;
     this.db.execute(query);
   }
-
-  public update(params) {}
-
-  public delete(params) {}
 }
 
 class ActiveRecord {
@@ -35,9 +31,9 @@ class ActiveRecord {
     const propertyNames = Object.getOwnPropertyNames(this).filter(
       (propertyName: string) => propertyName !== "id"
     );
-    const params = propertyNames.map((propertyName: string) =>  ({
+    const params = propertyNames.map((propertyName: string) => ({
       columnName: propertyName,
-      value: <string>this[propertyName]
+      value: <string>this[propertyName],
     }));
 
     this.table.insert(params);
@@ -52,20 +48,20 @@ class ActiveRecord {
 
 class Orders extends ActiveRecord {
   private id?: number;
-  private itemId: number;
-  private itemPrice: number;
-  private quantity: number;
+  private itemId?: number;
+  private itemPrice?: number;
+  private quantity?: number;
 
   public getId(): number | undefined {
     return this.id;
   }
-  public getItemId(): number {
+  public getItemId(): number | undefined {
     return this.itemId;
   }
-  public getItemPrice(): number {
+  public getItemPrice(): number | undefined {
     return this.itemPrice;
   }
-  public getQuantity(): number {
+  public getQuantity(): number | undefined {
     return this.quantity;
   }
 
@@ -83,6 +79,10 @@ class Orders extends ActiveRecord {
   }
 
   public calculatePaymentAmount(): number {
+    if (this.itemPrice === undefined || this.quantity === undefined) {
+      throw new Error("price or quantity undefined");
+    }
+
     return this.itemPrice * this.quantity;
   }
 }
