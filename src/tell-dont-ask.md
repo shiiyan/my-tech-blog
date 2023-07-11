@@ -2,9 +2,9 @@
 
 ## TellDontAsk
 
-In Object-oriented programming, TDA (Tell Don’t Ask) means telling an object to perform an action rather than asking for information and taking action on behalf of the object. 
+In Object-oriented programming, TDA (Tell Don’t Ask) means telling an object to perform an action rather than asking for information and taking action on behalf of the object.
 
-One of OOP's fundamental ideas is to bind behavior and data together. When a service class asks for information from an object and performs an operation, it causes seperation of behavior and data, with behavior implemented in the service class and data remained in the object.
+One of OOP's fundamental ideas is to bind behavior and data together. When a service class asks for information from an object and performs operations on it, it causes separation of behavior and data, with behavior implemented in the service class and data remained in the object.
 
 Behavior and Data together. (tight coupled).
 
