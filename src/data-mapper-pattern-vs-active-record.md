@@ -8,12 +8,11 @@ Over the years, different patterns have emerged, each offering its own approach 
 
 ## Overview of Active Record Pattern
 
-The active record pattern encapsulates business logic and data persistence into the same object, which represents a row in an RDBMS table. Developers can naturally learn to perform CRUD operations on a database by following this pattern when creating an active record instance.
+The active record pattern is a software architecture pattern that seamlessly integrates both business logic and data persistence within a single object. This object typically mirrors a row in a relational database management system (RDBMS) table. With this pattern, when developers instantiate an active record object, they are essentially working directly with a corresponding database row. This direct representation makes it straightforward and intuitive for developers to perform create, read, update and delete (CRUD) operations on the databases, thereby simplifying database interactions.
 
-Martin Fowler coined this term in his book P of EAA in 2003.
+![image](https://github.com/shiiyan/my-tech-blog/assets/36617009/2b615edf-b500-40b9-ba97-e7cbc58e212e)
 
-It is adapted by Ruby On Rails introduced in 2010?
-after that becomes famous
+The concept of the active record pattern was popularized by Martin Fowler in his seminal work, "Patterns of Enterprise Application Architecture" (P of EAA), published in 2003. It gained substantial traction and recognition when it was adopted by the Ruby on Rails (RoR) framework, which was introduced in 2010. The seamless implementation of the active record pattern in RoR contributes significantly to the framework's popularity, making it a go-to choice for many web developers. RoR's active record implementation not only simplifies database interactions but also ensures that developers adhere to best practices while working with databases.
 
 ## Overview of Repository Pattern
 
