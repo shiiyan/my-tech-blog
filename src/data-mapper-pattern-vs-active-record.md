@@ -36,6 +36,9 @@ The concept of the active record pattern was popularized by Martin Fowler in his
 
 ## Further Reading & Resources
 
+- [P of EAA: Active Record](https://www.martinfowler.com/eaaCatalog/activeRecord.html)
+- [Active Record Basics — Ruby on Rails Guides](https://guides.rubyonrails.org/active_record_basics.html)
+
 ```typescript
 class Orders extends ActiveRecord {
   private id: number;
