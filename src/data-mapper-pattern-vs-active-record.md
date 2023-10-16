@@ -16,6 +16,22 @@ The concept of the active record pattern was popularized by Martin Fowler in his
 
 ## Overview of Repository Pattern
 
+To understand repository pattern, one needs to understand data mapper pattern. Unlike active record pattern, data mapper pattern aims to isolate domain logic details from database access code. Like the following.
+
+Repository pattern use data mapper pattern inside, which has a strong will to separate(isolate)(a clean separation) domain logic from data persistence.
+
+Repository pattern builds another layer on data mapper pattern. Repository is used to concentrate query construction code. This is useful when the domain logic is complicated or the query is heavy, like the following one.
+
+Repository provide a collection-like interface, acting like an in-memory domain object collection.
+
+Object
+
+Repository
+
+DataMapper
+
+Database (table)
+
 ## Direct Comparison
 
 ### Design Philosophy
@@ -38,6 +54,8 @@ The concept of the active record pattern was popularized by Martin Fowler in his
 
 - [P of EAA: Active Record](https://www.martinfowler.com/eaaCatalog/activeRecord.html)
 - [Active Record Basics — Ruby on Rails Guides](https://guides.rubyonrails.org/active_record_basics.html)
+- [P of EAA: Data Mapper](https://martinfowler.com/eaaCatalog/dataMapper.html)
+- [P of EAA: Repository](https://martinfowler.com/eaaCatalog/repository.html)
 
 ```typescript
 class Orders extends ActiveRecord {
