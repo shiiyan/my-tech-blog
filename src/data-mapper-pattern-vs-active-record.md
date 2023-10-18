@@ -29,7 +29,7 @@ The data mapper pattern ensures domain objects only contain business rules. Any 
 The repository pattern introduces an additional layer upon the data mapper layer. The main purpose of the repository layer is to centralize the query construction code, providing a more object-oriented way of communicating with a set of objects. This becomes especially beneficial in scenarios where the queries are complex or
 there are a large number of domain objects.
 
-![image](https://github.com/shiiyan/my-tech-blog/assets/36617009/fcba7ef0-eb9b-4a37-8f19-ec25782a1a4d)
+<img width="1568" alt="image" src="https://github.com/shiiyan/my-tech-blog/assets/36617009/02b7292a-ab79-4d55-893d-c231926f0c30">
 
 ## Direct Comparison
 
