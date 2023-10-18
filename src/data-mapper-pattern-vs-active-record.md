@@ -16,21 +16,20 @@ The concept of the active record pattern was popularized by Martin Fowler in his
 
 ## Overview of Repository Pattern
 
-To understand repository pattern, one needs to understand data mapper pattern. Unlike active record pattern, data mapper pattern aims to isolate domain logic details from database access code. Like the following.
+### Understanding the Data Mapper Pattern
 
-Repository pattern use data mapper pattern inside, which has a strong will to separate(isolate)(a clean separation) domain logic from data persistence.
+Before diving into the repository pattern, it's essential to first grasp the concept of the data mapper pattern. In contrast to the active record pattern, the data mapper pattern is designed with the primary objective of separate the in-memory objects from the complexity of database access.
 
-Repository pattern builds another layer on data mapper pattern. Repository is used to concentrate query construction code. This is useful when the domain logic is complicated or the query is heavy, like the following one.
+![image](https://github.com/shiiyan/my-tech-blog/assets/36617009/e855285f-9021-4014-bb17-65f255d42a92)
 
-Repository provide a collection-like interface, acting like an in-memory domain object collection.
+The data mapper pattern ensures domain objects only contain business rules. Any task related to database operations is handed over to the data mapper layer. By separating these concerns, developers can make sure that changes in one don't unintentionally impact the other, leading to more modular, flexible, and maintainable applications.
 
-Object
+### the Repository Layer
 
-Repository
+The repository pattern introduces an additional layer upon the data mapper layer. The main purpose of the repository layer is to centralize the query construction code, providing a more object-oriented way of communicating with a set of objects. This becomes especially beneficial in scenarios where the queries are complex or
+there are a large number of domain objects.
 
-DataMapper
-
-Database (table)
+![image](https://github.com/shiiyan/my-tech-blog/assets/36617009/fcba7ef0-eb9b-4a37-8f19-ec25782a1a4d)
 
 ## Direct Comparison
 
