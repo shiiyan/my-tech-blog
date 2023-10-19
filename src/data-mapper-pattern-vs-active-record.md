@@ -56,6 +56,7 @@ Repositories act as domain object collections. This makes data operations - like
 - [Active Record Basics — Ruby on Rails Guides](https://guides.rubyonrails.org/active_record_basics.html)
 - [P of EAA: Data Mapper](https://martinfowler.com/eaaCatalog/dataMapper.html)
 - [P of EAA: Repository](https://martinfowler.com/eaaCatalog/repository.html)
+- https://softwareengineering.stackexchange.com/a/108852
 
 ```typescript
 class Orders extends ActiveRecord {
