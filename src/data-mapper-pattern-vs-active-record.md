@@ -6,7 +6,7 @@ In the world of software development, the bridge between relational databases an
 
 Over the years, different patterns have emerged, each offering its own approach to encapsulating the complexities of relational database interactions in objects. Among these, the Active Record and the Repository Patterns are widely adopted by famous web frameworks. In this article, I'll explore their differences and offers my thoughts on how to choose the one that fits best for your projects.
 
-## Overview of Active Record Pattern
+## Overview of the Active Record Pattern
 
 The active record pattern is a software architecture pattern that seamlessly integrates both business logic and data persistence within a single object. This object typically mirrors a row in a relational database management system (RDBMS) table. With this pattern, when developers instantiate an active record object, they are essentially working directly with a corresponding database row. This direct representation makes it straightforward and intuitive for developers to perform create, read, update and delete (CRUD) operations on the databases, thereby simplifying database interactions.
 
@@ -14,7 +14,7 @@ The active record pattern is a software architecture pattern that seamlessly int
 
 The concept of the active record pattern was popularized by Martin Fowler in his seminal work, "Patterns of Enterprise Application Architecture" (P of EAA), published in 2003. It gained substantial traction and recognition when it was adopted by the Ruby on Rails (RoR) framework, which was introduced in 2010. The seamless implementation of the active record pattern in RoR contributes significantly to the framework's popularity, making it a go-to choice for many web developers. RoR's active record implementation not only simplifies database interactions but also ensures that developers adhere to best practices while working with databases.
 
-## Overview of Repository Pattern
+## Overview of the Repository Pattern
 
 ### Understanding the Data Mapper Pattern
 
@@ -24,12 +24,13 @@ Before diving into the repository pattern, it's essential to first grasp the con
 
 The data mapper pattern ensures domain objects only contain business rules. Any task related to database operations is handed over to the data mapper layer. By separating these concerns, developers can make sure that changes in one don't unintentionally impact the other, leading to more modular, flexible, and maintainable applications.
 
-### the Repository Layer
+### The Repository Layer
 
-The repository pattern introduces an additional layer upon the data mapper layer. The main purpose of the repository layer is to centralize the query construction code, providing a more object-oriented way of communicating with a set of objects. This becomes especially beneficial in scenarios where the queries are complex or
-there are a large number of domain objects.
+The repository pattern introduces an additional layer upon the data mapper layer. The main purpose of the repository layer is to centralize the query construction code, providing a more object-oriented way of communicating with a collection of objects. This becomes especially beneficial in scenarios where the queries are complex or there are a large number of domain objects.
 
 <img width="1568" alt="image" src="https://github.com/shiiyan/my-tech-blog/assets/36617009/02b7292a-ab79-4d55-893d-c231926f0c30">
+
+Repositories act as domain object collections. This makes data operations - like adding, removing, or querying objects - feel like you're simply working with in memory collection-like data structures. By pooling all the query construction code into repositories, the codebase remains DRY (Don't Repeat Yourself). This centralized approach makes changes to data operation localized, reducing the risk of unintended side effects.
 
 ## Direct Comparison
 
