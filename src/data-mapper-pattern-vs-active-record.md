@@ -1,4 +1,4 @@
-# Active Record Pattern vs. Repository Pattern: A Comprehensive Comparison
+# Active Record Pattern vs. Repository Pattern: Making the Right Choice
 
 ## Introduction
 
@@ -34,21 +34,138 @@ Repositories act as domain object collections. This makes data operations - like
 
 ## Direct Comparison
 
-### Design Philosophy
+### Scalability
 
-### Granularity
+Let's start with an simple example of a blogging platform. On this platform, a user can write articles, post comments on these articles, and also like them. Adopting the active record pattern, we would implement a user model like the following. The pseudo code is written in a JavaScript fashion.
 
-### Flexibility
+```javascript
+class User extends ActiveRecord {
+  hasMany = ["Article", "Comment", "Like"];
+
+  addArticles(title, content) {
+    this.Article.create(title, content);
+  }
+
+  commentOnArticle(article, commentText) {
+    article.Comment.create(this, commentText);
+  }
+
+  likeArticle(article) {
+    this.Like.create(article);
+  }
+}
+```
+
+Using just a couple lines of code, we've set up the core functionalities of our blogging platform. Everything looks concise and clean. But as the platform grows, more features get added:
+
+1. Soft Deletion: Instead of permanently deleting user records, we need a mechanism to mark users as 'soft deleted.' This way, they're hidden from regular operations but can be restored if needed.
+2. Validation Logic:
+   - Article Content: It's essential that every article has content. We can't have blank articles being saved.
+   - Comment Length: Comments have constraints too. They must adhere to a specified minimum and maximum length to ensure both relevance and readability.
+3. Notifications: When a new comment is added to an article, it's required to notify the article's author about this new interaction.
+
+Implementing each of these features, the user model starts getting bloated.
+
+```javascript
+class User extends ActiveRecord {
+  hasMany = ["Article", "Comment", "Like"];
+  actsAs = ["SoftDelete"];
+  validate = {
+    Article: {
+      content: "NotBlank",
+    },
+    Comment: {
+      text: {
+        MinLength: 5,
+        MaxLength: 500,
+      },
+    },
+  };
+
+  addArticle(title, content) {
+    this.Article.create(title, content);
+  }
+
+  commentOnArticle(article, commentText) {
+    article.Comment.create(this, commentText);
+  }
+
+  likeArticle(article) {
+    this.Like.create(article);
+  }
+
+  getActiveUser() {
+    return this.find({ isDeleted: false });
+  }
+
+  afterSave(article, comment) {
+    article.User.notify(
+      `New comment on your article titled "${article.title}"`
+    );
+  }
+
+  notify(message) {
+    // send notifications to external services.
+  }
+}
+```
+
+Active Record Pattern here tightly couples domain logic with data persistence in relational databases. When such an intertwining occurs, developers often find themselves thinking primarily from a data persistence perspective, rather than focusing on the pure domain logic of the application.
+
+Consider the way we approach the additional requirements. We internally transform these requirements into more database-centric questions: How do we persist related data, such as Articles and Comments? What types of validation should be applied before saving the data? How do we send notifications after saving the data? What conditions should we set when querying the saved data? When web frameworks provide convenient methods or hooks to handle these scenarios, it's tempting to put all these functionalities into one class.
+
+As a result, our model becomes a "god class", which handles everything in one place. The user model now has responsibilities for things from validation logic, business rules, the details of how data is persisted (soft deletion) and fetched to interactions with external services. In real-world scenarios, it's usual for such a model to span over 1000 lines of code.
+
+As complexity grows exponentially, it becomes more challenging to read, understand and debug our model. Also modifying such a bulky class is risky. With so many functionalities packed into a single place, even minor modifications can lead to unexpected side effects, potentially affecting seemingly unrelated features.
+
+Using Repository pattern and internally using DDD tactical design
+
+Single Responsibility Principle
+
+becomes a challenge
+
+introducing a bug becomes easier
+
+Domain
+
+Repository
+
+Domain Event
+
+### Flexibility(Portability)
+
+domain tightly couples to a particular persistence mechanism.
+
+database schema
+
+when a global change.
+
+change from Redis or any other No-sql database to sql database relational database
+
+postpone the decision
+
+serialize
+
+change the content of the domain equals change data schema
 
 ### Testability
 
-### Scalability and Complexity
+when consider which unit test is an important part
 
-## Pros and Cons
+(### Complexity)
 
-### Recommendations
+(learning curve)
 
-## Conclusion
+## Making the Right Choice
+
+When xxx, you should use Active Record,
+
+when xxx, you should use Repository.
+
+DDD
+with complex domain
+scalability
+with plan to extends
 
 ## Further Reading & Resources
 
@@ -57,61 +174,4 @@ Repositories act as domain object collections. This makes data operations - like
 - [P of EAA: Data Mapper](https://martinfowler.com/eaaCatalog/dataMapper.html)
 - [P of EAA: Repository](https://martinfowler.com/eaaCatalog/repository.html)
 - https://softwareengineering.stackexchange.com/a/108852
-
-```typescript
-class Orders extends ActiveRecord {
-  private id: number;
-  private itemId: number;
-  private itemPrice: number;
-  private quantity: number;
-
-  getId(): number {}
-  getItem(): number {}
-  getQuantity(): number {}
-
-  setId(id: number) {}
-  setItem(itemId: number) {}
-  setItemPrice(itemPrice: number) {}
-  setQuantity(quantity: number) {}
-
-  calculatePaymentAmount(): number {
-    return this.itemPrice * this.quantity;
-  }
-}
-
-class ActiveRecord {
-  constructor() {
-    this.table = new Table("orders");
-  }
-
-  create() {}
-
-  update() {}
-
-  findById(id: number) {}
-
-  delete();
-}
-
-class Table {
-  private db: DatabaseConnection;
-  private tableName: string;
-
-  constructor(tableName: string) {
-    this.tableName = tableName;
-    this.db = new DatabaseConnection();
-  }
-
-  insert(params) {}
-
-  update(params) {}
-
-  delete(params) {}
-}
-```
-
-## Data Mapper Pattern
-
-implemented as DAO pattern.
-
-## Repository Pattern
+- some resource of DDD
