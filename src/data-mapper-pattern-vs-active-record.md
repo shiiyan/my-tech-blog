@@ -118,19 +118,15 @@ As a result, our model becomes a "god class", which handles everything in one pl
 
 As complexity grows exponentially, it becomes more challenging to read, understand and debug our model. Also modifying such a bulky class is risky. With so many functionalities packed into a single place, even minor modifications can lead to unexpected side effects, potentially affecting seemingly unrelated features.
 
-Using Repository pattern and internally using DDD tactical design
+Using Repository pattern and internally using DDD tactical design will help solve this problem.
 
-Single Responsibility Principle
+under Single Responsibility Principle (SRP), we create User domain. UserRepository and CommentSentEvent and Notifier. 
 
-becomes a challenge
+[source code of the above goes here]
 
-introducing a bug becomes easier
+Change will not affect directly User domain.
 
-Domain
-
-Repository
-
-Domain Event
+and vise versa. this way we create more maintainable code.
 
 ### Flexibility(Portability)
 
