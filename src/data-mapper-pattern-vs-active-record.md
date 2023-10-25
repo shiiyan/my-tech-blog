@@ -36,6 +36,8 @@ Repositories act as domain object collections. This makes data operations - like
 
 ### Scalability
 
+#### The Bloated User Model
+
 Let's start with an simple example of a blogging platform. On this platform, a user can write articles, post comments on these articles, and also like them. Adopting the active record pattern, we would implement a user model like the following. The pseudo code is written in a JavaScript fashion.
 
 ```javascript
@@ -118,15 +120,16 @@ As a result, our model becomes a "god class", which handles everything in one pl
 
 As complexity grows exponentially, it becomes more challenging to read, understand and debug our model. Also modifying such a bulky class is risky. With so many functionalities packed into a single place, even minor modifications can lead to unexpected side effects, potentially affecting seemingly unrelated features.
 
-Using Repository pattern and internally using DDD tactical design will help solve this problem.
+#### Embracing the Repository Pattern and DDD Tactical Design
 
-under Single Responsibility Principle (SRP), we create User domain. UserRepository and CommentSentEvent and Notifier. 
+To address the pitfalls we've identified with the bloated `User` model, we can turn to a combination of the Repository pattern and the Domain-Driven Design (DDD) tactical approach.
 
-[source code of the above goes here]
+By adhering to the Single Responsibility Principle (SRP), we restructure our codebase to ensure each class does only what it's supposed to:
 
-Change will not affect directly User domain.
-
-and vise versa. this way we create more maintainable code.
+1. User Domain: This is the core domain, handling the primary functionalities of a user and maintaining the referential integrity between the User, Article, and Comment entities. It encapsulates the core business logic of our application.
+2. UserRepository:
+3. CommentSentEvent:
+4. Notifier:
 
 ### Flexibility(Portability)
 
