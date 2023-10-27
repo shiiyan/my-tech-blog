@@ -38,7 +38,7 @@ Repositories act as domain object collections. This makes data operations - like
 
 #### The Bloated User Model
 
-Let's start with an simple example of a blogging platform. On this platform, a user can write articles, post comments on these articles, and also like them. Adopting the active record pattern, we would implement a user model like the following. The pseudo code is written in a JavaScript fashion.
+Let's start with an simple example of a blogging platform. On this platform, a user can write articles, post comments on these articles, and also like them. Adopting the active record pattern, we would implement a `User` model like the following. The pseudo code is written in a JavaScript fashion.
 
 ```javascript
 class User extends ActiveRecord {
@@ -66,7 +66,7 @@ Using just a couple lines of code, we've set up the core functionalities of our 
    - Comment Length: Comments have constraints too. They must adhere to a specified minimum and maximum length to ensure both relevance and readability.
 3. Notifications: When a new comment is added to an article, it's required to notify the article's author about this new interaction.
 
-Implementing each of these features, the user model starts getting bloated.
+Implementing each of these features, the `User` model starts getting bloated.
 
 ```javascript
 class User extends ActiveRecord {
@@ -116,7 +116,7 @@ Active Record Pattern here tightly couples domain logic with data persistence in
 
 Consider the way we approach the additional requirements. We internally transform these requirements into more database-centric questions: How do we persist related data, such as Articles and Comments? What types of validation should be applied before saving the data? How do we send notifications after saving the data? What conditions should we set when querying the saved data? When web frameworks provide convenient methods or hooks to handle these scenarios, it's tempting to put all these functionalities into one class.
 
-As a result, our model becomes a "god class", which handles everything in one place. The user model now has responsibilities for things from validation logic, business rules, the details of how data is persisted (soft deletion) and fetched to interactions with external services. In real-world scenarios, it's usual for such a model to span over 1000 lines of code.
+As a result, our model becomes a "god class", which handles everything in one place. The `User` model now has responsibilities for things from validation logic, business rules, the details of how data is persisted (soft deletion) and fetched to interactions with external services. In real-world scenarios, it's usual for such a model to span over 1000 lines of code.
 
 As complexity grows exponentially, it becomes more challenging to read, understand and debug our model. Also modifying such a bulky class is risky. With so many functionalities packed into a single place, even minor modifications can lead to unexpected side effects, potentially affecting seemingly unrelated features.
 
