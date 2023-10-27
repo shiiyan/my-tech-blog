@@ -127,9 +127,89 @@ To address the pitfalls we've identified with the bloated `User` model, we can t
 By adhering to the Single Responsibility Principle (SRP), we restructure our codebase to ensure each class does only what it's supposed to:
 
 1. User Domain: This is the core domain, handling the primary functionalities of a user and maintaining the referential integrity between the User, Article, and Comment entities. It encapsulates the core business logic of our application.
-2. UserRepository:
-3. CommentSentEvent:
-4. Notifier:
+2. UserRepository: This is dedicated to data persistence and retrieval tasks. It abstracts away the details of database operations.
+3. CommentPostedEvent: As the name suggests, this class indicates that a comment has been posted. It is used to decouple side-effects (sending notification) from main operations (posting comments).
+4. Notifier: A class designated to handle notification.
+
+Combining all of the above, let's look at the source code.
+
+```javascript
+// User Domain
+class User {
+  id: number;
+  name: string;
+  isDeleted: boolean;
+  articles: Article[]; // A list of articles associated with this user
+  comments: Comment[]; // A list of comments associated with this user
+  userLikes: Like[]; // A list of likes associated with this user
+
+  addArticle(title, content) {
+    this.articles.push(new Article(this, title, content));
+  }
+
+  commentOnArticle(article: Article, commentText: string) {
+    const comment = new Comment(this, article, commentText);
+    this.comments.push(comment);
+    article.addComment(comment);
+
+    // Dispatch an event when a comment is posted
+    const event = new CommentPostedEvent(comment);
+    event.dispatch();
+  }
+
+  likeArticle(article) {
+    this.userLikes.push(new Like(this, article));
+  }
+}
+```
+
+```javascript
+// 2. UserRepository
+class UserRepository {
+  database: any; // This can be a reference to a database connection
+
+  save(user: User) {
+    this.database.save(user);
+  }
+
+  findOneById(id: number): User {
+    return this.database.findById(id);
+  }
+
+  findAllActive(): User[] {
+    return this.database.findAllBy({ isDeleted: false });
+  }
+
+  // ... Additional CRUD operations ...
+}
+```
+
+```javascript
+// 3. CommentPostedEvent
+class CommentPostedEvent {
+  comment: Comment;
+
+  dispatch() {
+    // Notify the system that a comment has been posted
+    // This is just a showcase. Real-world applications mostly use pub/sub pattern here.
+    Notifier.sendNotification(this.comment);
+  }
+}
+```
+
+```javascript
+// 4. Notifier
+class Notifier {
+  static sendNotification(comment: Comment) {
+    // Logic to send notification, e.g., email or push notification
+    console.log(
+      `Notification: New comment posted by ${comment.user.name} on article ${comment.article.title}`
+    );
+  }
+}
+```
+
+With this structure, changes made to the `UserRepository` , for instance, won't directly impact the `User` domain and vice versa. This approach makes our codebase more resilient to changes in business requirements and data persistence specifics.
 
 ### Flexibility(Portability)
 
