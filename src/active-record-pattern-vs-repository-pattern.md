@@ -282,14 +282,9 @@ Given these factors, it's evident that testing pure classes (as seen in the repo
 
 ## Making the Right Choice
 
-When xxx, you should use Active Record,
+The active record pattern fits well in situations with direct data access and limited business logic. It provides a seamless, direct link between the database records and the corresponding objects in the application, making CRUD operations intuitive.
 
-when xxx, you should use Repository.
-
-DDD
-with complex domain
-scalability
-with plan to extends
+On the other hand, if your application is dealing with complex domain, or you see a future where scalability and growing business rules will come into play, the repository pattern is a more suitable choice. It offers flexibility and makes your application more adaptable to changes, whether they are in the underlying storage mechanism or the frequently evolving business rules.
 
 ## Further Reading & Resources
 
@@ -297,5 +292,5 @@ with plan to extends
 - [Active Record Basics — Ruby on Rails Guides](https://guides.rubyonrails.org/active_record_basics.html)
 - [P of EAA: Data Mapper](https://martinfowler.com/eaaCatalog/dataMapper.html)
 - [P of EAA: Repository](https://martinfowler.com/eaaCatalog/repository.html)
-- https://softwareengineering.stackexchange.com/a/108852
-- some resource of DDD
+- [What are the drawbacks to the ActiveRecord pattern? - Software Engineering Stack Exchange](https://softwareengineering.stackexchange.com/a/108852)
+- [Best Practice - An Introduction To Domain-Driven Design | Microsoft Learn](https://learn.microsoft.com/en-us/archive/msdn-magazine/2009/february/best-practice-an-introduction-to-domain-driven-design)
