@@ -294,3 +294,4 @@ On the other hand, if your application is dealing with complex domain, or you se
 - [P of EAA: Repository](https://martinfowler.com/eaaCatalog/repository.html)
 - [What are the drawbacks to the ActiveRecord pattern? - Software Engineering Stack Exchange](https://softwareengineering.stackexchange.com/a/108852)
 - [Best Practice - An Introduction To Domain-Driven Design | Microsoft Learn](https://learn.microsoft.com/en-us/archive/msdn-magazine/2009/february/best-practice-an-introduction-to-domain-driven-design)
+- [Design patterns for the database layer | by Nitin Khaitan | Towards Polyglot Architecture | Medium](https://medium.com/towards-polyglot-architecture/design-patterns-for-the-database-layer-7b741b126036)
