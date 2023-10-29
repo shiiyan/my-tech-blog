@@ -269,11 +269,16 @@ class MySQLUserRepository implements UserRepository {
 
 ### Testability
 
-when consider which unit test is an important part
+Unit testing plays a pivotal role in ensuring software quality. When you compare the testability of the active record pattern and the repository pattern, some clear distinctions arise. Testing domain models in repository pattern is undemanding while testing active record models can be complex.
 
-(### Complexity)
+In repository pattern, testing domain models that are decoupled from data persistence logic is straightforward. Typically, you can rely solely on test frameworks like xUnit without requiring any mock objects or test doubles. This makes your tests cleaner and more focused on the business logic.
 
-(learning curve)
+In contrast, testing models that are intertwined with database access logic can be challenging. One of the reasons is that preparing test data becomes a prerequisite, and deciding how to handle database interactions during tests can be complicated. Developers often faced with two choices: either set up a test database with specific data fixtures or mock the database interactions. Both strategies have their complications.
+
+- Using a test database requires ensuring each test case starts with a clean state, which might mean truncating tables before each test. This process can be time-consuming and makes the test setup intricate.
+- Mocking database interactions can be complex, especially when tangled database operations are involved. This can make tests harder to write and maintain.
+
+Given these factors, it's evident that testing pure classes (as seen in the repository pattern) offers a more streamlined and efficient approach. While the active record pattern can complicate and slow down the test process.
 
 ## Making the Right Choice
 
