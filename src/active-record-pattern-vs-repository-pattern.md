@@ -216,7 +216,7 @@ With this structure, changes made to the `UserRepository` , for instance, won't 
 When it comes to the flexibility of managing persistence mechanisms, the active record pattern can present more challenges than the repository pattern. The active record pattern is less modular because the domain model is closely tied to a specific persistence mechanism, such as a relational database or a document-based NoSQL database. Consequently, any global alterations in the persistence mechanism equate to modifying the domain model's content. If you transition from a NoSQL to an SQL database, those changes might include:
 
 - Modifying how data is serialized/deserialized for NoSQL.
-- Adjusting queries or ORM for SQL.
+- Adjusting queries (or ORM) for SQL.
 - Restructuring the domain model to align with the new database schema.
 
 The repository pattern shines in such circumstances. Its strength lies in its ability to maintain a consistent repository interface, even when the underlying persistence mechanism changes. If a decision is made to switch the data store, developers can simply design a new repository tailored for that data store. The beauty of the repository pattern is that there's no obligation to modify the domain object itself, ensuring a smoother transition of persistent mechanism and greater flexibility in design choices.
